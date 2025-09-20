@@ -6,7 +6,6 @@ colorTo: blue
 sdk: static
 pinned: false
 tags:
-  - deepsite
----
-
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+  - Vscode
+---  http://127.0.0.1:5501/.vscode/AI_Job_Portal.html
+    
