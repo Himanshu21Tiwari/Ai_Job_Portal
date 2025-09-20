@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | AI Job Portal</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .sidebar-link:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .sidebar-link.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-left: 3px solid #3b82f6;
+        }
+        .match-score {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        .progress-bar {
+            height: 6px;
+            border-radius: 3px;
+        }
+        .application-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64 border-r border-gray-200 bg-white">
+                <div class="flex items-center h-16 flex-shrink-0 px-4 bg-white">
+                    <i data-feather="briefcase" class="text-indigo-600 h-8 w-8"></i>
+                    <span class="ml-2 text-xl font-bold gradient-text">AIJobs</span>
+                </div>
+                <div class="h-0 flex-1 flex flex-col overflow-y-auto">
+                    <nav class="flex-1 px-2 py-4 space-y-1">
+                        <a href="#" class="sidebar-link active group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-900">
+                            <i data-feather="home" class="mr-3 flex-shrink-0 h-5 w-5 text-gray-500 group-hover:text-gray-500"></i>
+                            Dashboard
+                        </a>
+                        <a href="#" class="sidebar-link group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            <i data-feather="user" class="mr-3 flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"></i>
+                            Profile
+                        </a>
+                        <a href="#" class="sidebar-link group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            <i data-feather="file-text" class="mr-3 flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"></i>
+                            Resumes
+                        </a>
+                        <a href="#" class="sidebar-link group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            <i data-feather="bell" class="mr-3 flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"></i>
+                            Notifications
+                        </a>
+                        <a href="#" class="sidebar-link group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            <i data-feather="heart" class="mr-3 flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"></i>
+                            Saved Jobs
+                        </a>
+                        <a href="#" class="sidebar-link group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            <i data-feather="send" class="mr-3 flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"></i>
+                            Applications
+                        </a>
+                        <a href="#" class="sidebar-link group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            <i data-feather="target" class="mr-3 flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"></i>
+                            Job Matches
+                        </a>
+                        <a href="#" class="sidebar-link group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+                            <i data-feather="settings" class="mr-3 flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"></i>
+                            Settings
+                        </a>
+                    </nav>
+                </div>
+                <div class="p-4 border-t border-gray-200">
+                    <div class="flex items-center">
+                        <div>
+                            <img class="inline-block h-9 w-9 rounded-full" src="http://static.photos/office/200x200/123" alt="">
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-700">John Doe</p>
+                            <a href="#" class="text-xs font-medium text-indigo-600 hover:text-indigo-500">View profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top navigation -->
+            <div class="bg-white shadow-sm">
+                <div class="px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
+                        <div class="flex items-center md:hidden">
+                            <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                                <span class="sr-only">Open sidebar</span>
+                                <i data-feather="menu" class="h-6 w-6"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <h1 class="text-lg font-bold text-gray-900">Dashboard</h1>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <button type="button" class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <span class="sr-only">View notifications</span>
+                                <i data-feather="bell" class="h-6 w-6"></i>
+                            </button>
+                            <div class="ml-3 relative">
+                                <div>
+                                    <button type="button" class="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                        <span class="sr-only">Open user menu</span>
+                                        <img class="h-8 w-8 rounded-full" src="http://static.photos/job/200x200/123" alt="Find Job">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content area -->
+            <div class="flex-1 overflow-auto focus:outline-none">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <!-- Stats -->
+                    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+                        <div class="bg-white overflow-hidden shadow rounded-lg" data-aos="fade-up">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                                        <i data-feather="briefcase" class="text-white h-6 w-6"></i>
+                                    </div>
+                                    <div class="ml-5 w-0 flex-1">
+                                        <dt class="text-sm font-medium text-gray-500 truncate">Total Applications</dt>
+                                        <dd class="flex items-baseline">
+                                            <div class="text-2xl font-semibold text-gray-900">24</div>
+                                            <div class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+                                                <i data-feather="arrow-up" class="h-4 w-4"></i>
+                                                <span class="sr-only">Increased by</span>
+                                                12%
+                                            </div>
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white overflow-hidden shadow rounded-lg" data-aos="fade-up" data-aos-delay="100">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                                        <i data-feather="check-circle" class="text-white h-6 w-6"></i>
+                                    </div>
+                                    <div class="ml-5 w-0 flex-1">
+                                        <dt class="text-sm font-medium text-gray-500 truncate">Interviews</dt>
+                                        <dd class="flex items-baseline">
+                                            <div class="text-2xl font-semibold text-gray-900">5</div>
+                                            <div class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+                                                <i data-feather="arrow-up" class="h-4 w-4"></i>
+                                                <span class="sr-only">Increased by</span>
+                                                25%
+                                            </div>
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white overflow-hidden shadow rounded-lg" data-aos="fade-up" data-aos-delay="200">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                                        <i data-feather="star" class="text-white h-6 w-6"></i>
+                                    </div>
+                                    <div class="ml-5 w-0 flex-1">
+                                        <dt class="text-sm font-medium text-gray-500 truncate">Saved Jobs</dt>
+                                        <dd class="flex items-baseline">
+                                            <div class="text-2xl font-semibold text-gray-900">14</div>
+                                            <div class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+                                                <i data-feather="arrow-up" class="h-4 w-4"></i>
+                                                <span class="sr-only">Increased by</span>
+                                                8%
+                                            </div>
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white overflow-hidden shadow rounded-lg" data-aos="fade-up" data-aos-delay="300">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                                        <i data-feather="target" class="text-white h-6 w-6"></i>
+                                    </div>
+                                    <div class="ml-5 w-0 flex-1">
+                                        <dt class="text-sm font-medium text-gray-500 truncate">Best Matches</dt>
+                                        <dd class="flex items-baseline">
+                                            <div class="text-2xl font-semibold text-gray-900">8</div>
+                                            <div class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+                                                <i data-feather="arrow-up" class="h-4 w-4"></i>
+                                                <span class="sr-only">Increased by</span>
+                                                33%
+                                            </div>
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Completion -->
+                    <div class="bg-white shadow rounded-lg mb-6" data-aos="fade-up">
+                        <div class="px-4 py-5 sm:px-6">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Profile Completion</h3>
+                            <p class="mt-1 text-sm text-gray-500">Complete your profile to get better job matches.</p>
+                        </div>
+                        <div class="px-4 py-5 sm:p-6">
+                            <div class="mb-4">
+                                <div class="flex justify-between">
+                                    <span class="text-sm font-medium text-gray-700">75% Complete</span>
+                                    <span class="text-sm text-gray-500">3 of 4 sections</span>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="progress-bar bg-gray-200 rounded-full">
+                                        <div class="progress-bar bg-indigo-600 rounded-full" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <i data-feather="check-circle" class="h-5 w-5 text-green-500"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-700">Basic Info</p>
+                                        <p class="text-sm text-gray-500">Completed</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <i data-feather="check-circle" class="h-5 w-5 text-green-500"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-700">Work Experience</p>
+                                        <p class="text-sm text-gray-500">Completed</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <i data-feather="check-circle" class="h-5 w-5 text-green-500"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-700">Education</p>
+                                        <p class="text-sm text-gray-500">Completed</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <i data-feather="alert-circle" class="h-5 w-5 text-yellow-500"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-700">Skills</p>
+                                        <p class="text-sm text-gray-500">Add more skills</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Complete Profile
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Applications -->
+                    <div class="bg-white shadow rounded-lg mb-6" data-aos="fade-up">
+                        <div class="px-4 py-5 sm:px-6">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Applications</h3>
+                                <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">View all</a>
+                            </div>
+                        </div>
+                        <div class="px-4 py-5 sm:p-6">
+                            <div class="space-y-4">
+                                <!-- Application 1 -->
+                                <div class="application-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm transition-all duration-300 ease-in-out">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <img class="h-10 w-10 rounded-full" src="http://static.photos/technology/200x200/1" alt="">
+                                            </div>
+                                            <div class="ml-4">
+                                                <h4 class="text-base font-medium text-gray-900">Senior Frontend Developer</h4>
+                                                <p class="text-sm text-gray-500">TechCorp Inc. • Applied 2 days ago</p>
+                                                <div class="mt-2 flex flex-wrap gap-2">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">React</span>
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">TypeScript</span>
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Redux</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="match-score bg-green-100 text-green-800 mr-4">92%</div>
+                                            <div class="relative">
+                                                <div class="dropdown relative">
+                                                    <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-500 focus:outline-none">
+                                                        <i data-feather="more-vertical" class="h-5 w-5"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <span class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></span>
+                                                <span class="text-sm font-medium text-gray-700">Application Viewed</span>
+                                            </div>
+                                            <span class="text-sm text-gray-500">Today at 10:42 AM</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Application 2 -->
+                                <div class="application-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm transition-all duration-300 ease-in-out">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <img class="h-10 w-10 rounded-full" src="http://static.photos/finance/200x200/2" alt="">
+                                            </div>
+                                            <div class="ml-4">
+                                                <h4 class="text-base font-medium text-gray-900">Data Scientist</h4>
+                                                <p class="text-sm text-gray-500">AnalyticsPro • Applied 1 week ago</p>
+                                                <div class="mt-2 flex flex-wrap gap-2">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Python</span>
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Machine Learning</span>
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">TensorFlow</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="match-score bg-blue-100 text-blue-800 mr-4">87%</div>
+                                            <div class="relative">
+                                                <div class="dropdown relative">
+                                                    <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-500 focus:outline-none">
+                                                        <i data-feather="more-vertical" class="h-5 w-5"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <span class="h-2.5 w-2.5 rounded-full bg-yellow-400 mr-2"></span>
+                                                <span class="text-sm font-medium text-gray-700">Under Review</span>
+                                            </div>
+                                            <span class="text-sm text-gray-500">2 days ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Application 3 -->
+                                <div class="application-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm transition-all duration-300 ease-in-out">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <img class="h-10 w-10 rounded-full" src="http://static.photos/office/200x200/3" alt="">
+                                            </div>
+                                            <div class="ml-4">
+                                                <h4 class="text-base font-medium text-gray-900">Product Manager</h4>
+                                                <p class="text-sm text-gray-500">InnovateCo • Applied 3 days ago</p>
+                                                <div class="mt-2 flex flex-wrap gap-2">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Agile</span>
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">UX</span>
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Roadmapping</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="match-score bg-purple-100 text-purple-800 mr-4">78%</div>
+                                            <div class="relative">
+                                                <div class="dropdown relative">
+                                                    <button type="button" class="dropdown-toggle text-gray-400 hover:text-gray-500 focus:outline-none">
+                                                        <i data-feather="more-vertical" class="h-5 w-5"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <span class="h-2.5 w-2.5 rounded-full bg-red-400 mr-2"></span>
+                                                <span class="text-sm font-medium text-gray-700">Not Selected</span>
+                                            </div>
+                                            <span class="text-sm text-gray-500">Yesterday</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Job Recommendations -->
+                    <div class="bg-white shadow rounded-lg" data-aos="fade-up">
+                        <div class="px-4 py-5 sm:px-6">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">AI Job Recommendations</h3>
+                                <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">View all</a>
+                            </div>
+                            <p class="mt-1 text-sm text-gray-500">Jobs that match your profile based on our AI analysis</p>
+                        </div>
+                        <div class="px-4 py-5 sm:p-6">
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <!-- Job Recommendation 1 -->
+                                <div class="job-card bg-white border border-gray-200 rounded-lg p-4 shadow-sm transition-all duration-300 ease-in-out">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <img class="h-10 w-10 rounded-full" src="http://static.photos/technology/200x200/4" alt="">
+                                            </div>
+                                            <div class="ml-4">
+                                                <h4 class="text-base font-medium text-gray-900">Full Stack Developer</h4>
+                                                <p class="text-sm text-gray-500">WebSolutions • New York, NY</p>
+                                                <div class="mt-2 flex flex-wrap gap-2">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">Node.js</span>
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">React</span>
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">MongoDB</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="match-score bg-green-100 text-green-800">95%</div>
+                                    </div>
+                                    <div class="mt-4 flex justify-between items-center">
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i data-feather="dollar-sign" class="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400"></i>
+                                            <
+</body>
+</html>
